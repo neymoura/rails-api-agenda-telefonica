@@ -4,8 +4,7 @@ class ContactsController < ApplicationController
 
   # GET /contacts
   def index
-    @contacts = Contact.all
-
+    @contacts = Contact.where("user_id = ?", current_user.id)
     render json: @contacts
   end
 
@@ -16,7 +15,7 @@ class ContactsController < ApplicationController
 
   # POST /contacts
   def create
-    @contact = Contact.new(contact_params)
+    @contact = Contact.new(parse_contact)
 
     if @contact.save
       render json: @contact, status: :created, location: @contact
@@ -27,7 +26,7 @@ class ContactsController < ApplicationController
 
   # PATCH/PUT /contacts/1
   def update
-    if @contact.update(contact_params)
+    if @contact.update(parse_contact)
       render json: @contact
     else
       render json: @contact.errors, status: :unprocessable_entity
@@ -37,18 +36,31 @@ class ContactsController < ApplicationController
   # DELETE /contacts/1
   def destroy
     @contact.destroy
+    render json: {:error => "Contato excluído com sucesso!"}, status: :unprocessable_entity
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_contact
-      @contact = Contact.find(params[:id])
+      
+      @contact = Contact.where("id = ? and user_id = ?", params[:id], current_user.id).first()
+
+      if !@contact then
+        render json: {:error => "Contato não existe"}, status: :unprocessable_entity
+      end
+
+    end
+
+    def parse_contact
+      contact = contact_params
+      contact[:birth] = Time.at(contact[:birth])
+      contact[:user_id] = current_user.id
+      contact
     end
 
     # Only allow a trusted parameter "white list" through.
     def contact_params
-      contact = params.require(:contact).permit(:name, :birth, :email, :phone, :picture)
-      contact[:birth] = Time.at(contact[:birth])
-      return contact
+      params.require(:contact).permit(:name, :birth, :email, :phone, :picture)
     end
 end
