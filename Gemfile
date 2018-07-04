@@ -25,6 +25,12 @@ gem 'puma', '~> 3.7'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+# Flexible authentication solution for Rails with Warden.
+gem 'devise'
+
+# Token based authentication for Rails JSON APIs. Designed to work with jToker and ng-token-auth.
+gem 'devise_token_auth'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
