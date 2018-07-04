@@ -15,3 +15,13 @@ First create the database with:
 Then:
 
 `rails s`
+
+## Postman Collection
+
+You can acquire the full Postman collection trough one those:
+
+Collection link:  
+`https://www.getpostman.com/collections/3824a7d4507b0ecc3d27`
+
+Collection file:  
+`postman.json`
