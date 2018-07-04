@@ -1,10 +1,17 @@
-# How to Auth
+# API Agenda telefônica
+Projeto para ser utilizado no treinamento de formação dos estagiários Android/iOS em 2018.2
+
+## How to Auth
 https://devise-token-auth.gitbook.io/devise-token-auth/usage
 
-# To check all the routes use
+## Available routes
 `rails routes`
 
-# Starting the project
+## Starting the project
 
 First create the database with:  
 `rails db:create db:migrate`
+
+Then:
+
+`rails s`
